@@ -26,10 +26,11 @@ jobs:
           scopes: |
             https://www.googleapis.com/auth/cloud-platform
 
-      - name: Set up Cloud SDK
+      - name: Set up Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
+          install_components: 'beta'
 
       - name: Build and push Docker image
         run: |
@@ -42,5 +43,4 @@ jobs:
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
-            --memory 512Mi
-            --min-instances 0 \
+            --memory 512Mi \
