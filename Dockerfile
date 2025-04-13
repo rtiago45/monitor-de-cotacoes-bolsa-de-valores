@@ -1,14 +1,8 @@
-FROM ubuntu:latest
-LABEL authors="Tiagoo"
-
-ENTRYPOINT ["top", "-b"]
-
-
 # Etapa de build
 FROM eclipse-temurin:21 AS builder
 WORKDIR /app
 COPY . .
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests -Dmaven.compiler.source=21 -Dmaven.compiler.target=21
 
 # Etapa de execução
 FROM eclipse-temurin:21
