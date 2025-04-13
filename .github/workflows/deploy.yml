@@ -23,6 +23,8 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
+          scopes: |
+            https://www.googleapis.com/auth/cloud-platform
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
