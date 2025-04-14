@@ -24,9 +24,11 @@ jobs:
           distribution: 'temurin'
 
       - name: Authenticate to Google Cloud
+        id: auth
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          service_account: 'cloudbuild-deployer@monitor-cotacoes.iam.gserviceaccount.com'
 
       - name: Set up Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v1
