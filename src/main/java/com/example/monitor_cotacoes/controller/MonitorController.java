@@ -14,7 +14,10 @@ public class MonitorController {
 
     @PostMapping("/verificar")
     public ResponseEntity<Void> verificarCotas() {
-        alertaService.listarAtivos();
+        alertaService.verificarEEnviarAlertas();
         return ResponseEntity.ok().build();
     }
+
+
+
 }
