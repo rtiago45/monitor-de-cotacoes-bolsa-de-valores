@@ -11,7 +11,7 @@ jobs:
 
     permissions:
       contents: 'read'
-      id-token: 'write' # NECESSÁRIO para usar o `auth@v1`
+      id-token: 'write'
 
     steps:
       - name: Checkout source
@@ -48,3 +48,4 @@ jobs:
             --allow-unauthenticated \
             --memory 512Mi \
             --min-instances 0 \
+            --service-account cloud-run-deployer@monitor-cotacoes.iam.gserviceaccount.com
