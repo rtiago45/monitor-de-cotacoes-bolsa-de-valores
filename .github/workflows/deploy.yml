@@ -11,7 +11,7 @@ jobs:
 
     permissions:
       contents: 'read'
-      id-token: 'write' # Necessário para o auth do GCP
+      id-token: 'write'
 
     steps:
       - name: Checkout source
@@ -23,22 +23,21 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Autenticar com o Google Cloud
+      - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_PROVIDER }}'
-          service_account: 'cloud-run-deployer@monitor-cotacoes.iam.gserviceaccount.com'
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - name: Instalar CLI do Google Cloud
+      - name: Set up Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
 
-      - name: Build e push da imagem Docker
+      - name: Build and push Docker image
         run: |
           gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/monitor-cotacoes
 
-      - name: Deploy no Cloud Run
+      - name: Deploy to Cloud Run
         run: |
           gcloud run deploy monitor-cotacoes \
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/monitor-cotacoes \
